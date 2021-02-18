@@ -21,7 +21,7 @@ bool ParseArgs(int argc, char* argv[], Args& args, Error& err) {
   return true;
 }
 
-int CheckFiles(std::ifstream& file1, std::ifstream& file2, Error& err) {
+int CompareFiles(std::ifstream& file1, std::ifstream& file2, Error& err) {
   std::string str1, str2;
   unsigned int lineCounter = 0;
   bool equal = true;
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  int result = CheckFiles(file1, file2, err);
+  int result = CompareFiles(file1, file2, err);
 
   if (result == 0) {
     std::cout << "Files are equal\n";

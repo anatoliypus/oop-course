@@ -26,7 +26,10 @@
     <Text Include="SuccessSample.txt" />
     <Text Include="File3.txt" />
     <Text Include="File4.txt" />
-    <Text Include="FailSample.txt" />
+    <Text Include="File5.txt" />
+    <Text Include="File6.txt" />
+    <Text Include="FailSample1.txt" />
+    <Text Include="FailSample2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tests.bat">

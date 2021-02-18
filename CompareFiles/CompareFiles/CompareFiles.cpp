@@ -39,6 +39,10 @@ int CheckFiles(std::ifstream& file1, std::ifstream& file2, Error& err) {
     return -1;
   }
 
+  if (!file1.eof() || !file2.eof()) {
+    equal = false;
+  }
+
   if (equal) {
     return 0;
   } else {

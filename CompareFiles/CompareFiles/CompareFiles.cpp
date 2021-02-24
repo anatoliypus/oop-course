@@ -39,8 +39,9 @@ int CompareFiles(std::ifstream& file1, std::ifstream& file2, Error& err) {
     return -1;
   }
 
-  if (!file1.eof() || !file2.eof()) {
+  if (equal & (!file1.eof() || !file2.eof())) {
     equal = false;
+    ++lineCounter;
   }
 
   if (equal) {
@@ -56,6 +57,11 @@ int main(int argc, char* argv[]) {
   if (!ParseArgs(argc, argv, args, err)) {
     std::cout << err.message;
     return 1;
+  }
+
+  if (args.file1 == args.file2) {
+    std::cout << "Files are equal\n";
+    return 0;
   }
 
   std::ifstream file1, file2;

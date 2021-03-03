@@ -41,7 +41,7 @@ int CompareFiles(std::ifstream& file1, std::ifstream& file2, Error& err)
         return -1;
     }
 
-    if (equal & (!file1.eof() || !file2.eof())) {
+    if (equal && (!file1.eof() || !file2.eof())) {
         equal = false;
         ++lineCounter;
     }

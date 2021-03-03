@@ -5,46 +5,32 @@ struct Error {
     std::string message;
 };
 
-bool ConvertStrToInt(const std::string& str, size_t& res, Error& err)
-{
-    try {
-        size_t pos;
-        res = std::stoi(str, &pos);
-        if (std::to_string(res).length() != str.length()) {
-            err.message = "Wrong characters in input number";
-            return false;
-        }
-        return true;
-    } catch (const std::exception&) {
-        err.message = "Wrong input number";
-        return false;
-    }
-};
-
-bool ParseArgs(int argc, char* argv[], std::string& res, Error& err)
+bool ParseArgs(int argc, char* const argv[], std::string& input, Error& err)
 {
     if (argc != 2) {
-        err.message = "Wrong command line parameters given";
+        err.message = "Wrong command line parameters";
         return false;
     }
-    res = argv[1];
+    input = argv[1];
     return true;
 }
 
-bool ConvertBinToDec(size_t num, size_t& res, Error& err)
+bool ConvertBinToDec(const std::string& input, std::size_t& res, Error& err)
 {
+    std::size_t length = input.length();
+    std::size_t i;
     res = 0;
-    short int digit;
-    size_t ratio = 1;
-    while (num > 0) {
-        digit = num % 10;
-        num = num / 10;
-        if (digit != 1 && digit != 0) {
-            err.message = "Given number is not binary";
+    for (i = 0; i < length; i++) {
+        char ch = input[i];
+        if (ch == '1') {
+            res++;
+        } else if (ch != '0') {
+            err.message = "Wrong input number";
             return false;
         }
-        res += digit * ratio;
-        ratio *= 2;
+        if (i + 1 < length) {
+            res = res << 1;
+        }
     }
     return true;
 }
@@ -52,28 +38,16 @@ bool ConvertBinToDec(size_t num, size_t& res, Error& err)
 int main(int argc, char* argv[])
 {
     Error err;
-
-    // получение аргумента командной строки
-    std::string str_num;
-    if (!ParseArgs(argc, argv, str_num, err)) {
+    std::string input;
+    if (!ParseArgs(argc, argv, input, err)) {
         std::cout << err.message;
         return 1;
     }
-
-    // перевод аргумента в число
-    size_t num;
-    if (!ConvertStrToInt(str_num, num, err)) {
+    size_t result;
+    if (!ConvertBinToDec(input, result, err)) {
         std::cout << err.message;
         return 1;
     }
-
-    // конвертация
-    size_t res;
-    if (!ConvertBinToDec(num, res, err)) {
-        std::cout << err.message;
-        return 1;
-    }
-
-    std::cout << res << std::endl;
+    std::cout << result << std::endl;
     return 0;
 }

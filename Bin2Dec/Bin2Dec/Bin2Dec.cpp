@@ -15,21 +15,19 @@ bool ParseArgs(int argc, char* const argv[], std::string& input, Error& err)
     return true;
 }
 
-bool ConvertBinToDec(const std::string& input, std::size_t& res, Error& err)
+bool ConvertBinToInt(const std::string& input, std::size_t& res, Error& err)
 {
     std::size_t length = input.length();
     std::size_t i;
     res = 0;
     for (i = 0; i < length; i++) {
         char ch = input[i];
+        res = res << 1;
         if (ch == '1') {
             res++;
         } else if (ch != '0') {
             err.message = "Wrong input number";
             return false;
-        }
-        if (i + 1 < length) {
-            res = res << 1;
         }
     }
     return true;
@@ -44,7 +42,7 @@ int main(int argc, char* argv[])
         return 1;
     }
     size_t result;
-    if (!ConvertBinToDec(input, result, err)) {
+    if (!ConvertBinToInt(input, result, err)) {
         std::cout << err.message;
         return 1;
     }

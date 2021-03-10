@@ -19,4 +19,16 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Tests.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="goodMatrix1.txt" />
+    <Text Include="goodMatrix2.txt" />
+    <Text Include="goodResult.txt" />
+    <Text Include="badMatrix1.txt" />
+    <Text Include="badMatrix2.txt" />
+  </ItemGroup>
 </Project>

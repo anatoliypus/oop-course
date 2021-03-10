@@ -1,20 +1,113 @@
-﻿// MultMartrix.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+﻿#include <fstream>
 #include <iostream>
+#include <sstream>
+#include <string>
 
-int main()
+struct Error {
+    std::string message;
+};
+
+struct Files {
+    std::string fileName1, fileName2;
+};
+
+typedef int Matrix3x3[3][3];
+
+bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
 {
-    std::cout << "Hello World!\n";
+    std::ifstream file;
+    file.open(fileName);
+    if (!file.is_open()) {
+        err.message = "Wrong file name";
+        return false;
+    }
+
+    std::string str;
+    size_t num;
+    int rows = 0;
+    int cols = 0;
+    while (!file.eof()) {
+        std::getline(file, str);
+        std::istringstream iStr(str);
+        for (int i = 1; i <= 3; i++) {
+            if (iStr.eof()) {
+                err.message = "Lack of values in matrix";
+                return false;
+            }
+            iStr >> str;
+            try {
+                num = std::stoi(str);
+                matrix[rows][cols] = num;
+            } catch (std::exception) {
+                err.message = "Error in matrix values";
+                return false;
+            }
+            cols++;
+        }
+        rows++;
+        cols = 0;
+    }
+
+    return true;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+bool ParseArgs(int argc, char* const argv[], Error& err, Files& files)
+{
+    if (argc != 3) {
+        err.message = "Wrong parameters given";
+        return false;
+    }
+    files.fileName1 = argv[1];
+    files.fileName2 = argv[2];
+    return true;
+}
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+void MultMatrix3x3(const Matrix3x3& m1, const Matrix3x3& m2, Matrix3x3& res)
+{
+    for (int k = 0; k < 3; k++) {
+        for (int i = 0; i < 3; i++) {
+            int sum = 0;
+            for (int j = 0; j < 3; j++) {
+                sum += m1[k][j] * m2[j][i];
+            }
+            res[k][i] = sum;
+        }
+    }
+}
+
+void WriteOutMatrix3x3(const Matrix3x3& m)
+{
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            std::cout << m[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    Error err;
+    Files files;
+    if (!ParseArgs(argc, argv, err, files)) {
+        std::cout << err.message << std::endl;
+        return 1;
+    }
+
+    Matrix3x3 matrix1;
+    if (!ReadMatrix3x3(files.fileName1, matrix1, err)) {
+        std::cout << err.message << std::endl;
+        return 1;
+    }
+
+    Matrix3x3 matrix2;
+    if (!ReadMatrix3x3(files.fileName2, matrix2, err)) {
+        std::cout << err.message << std::endl;
+        return 1;
+    }
+
+    Matrix3x3 result;
+    MultMatrix3x3(matrix1, matrix2, result);
+
+    WriteOutMatrix3x3(result);
+}

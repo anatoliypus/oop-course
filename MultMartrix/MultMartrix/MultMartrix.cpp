@@ -18,7 +18,7 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
     std::ifstream file;
     file.open(fileName);
     if (!file.is_open()) {
-        err.message = "Wrong file name";
+        err.message = "Could not open file with name " + fileName;
         return false;
     }
 
@@ -31,11 +31,11 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
         std::istringstream iStr(str);
         for (int i = 1; i <= 3; i++) {
             if (iStr.eof()) {
-                err.message = "Given matrix is not full";
+                err.message = "Given matrix is not full. Input file has to contain at least 3 columns";
                 return false;
             }
             if (!(iStr >> num)) {
-                err.message = "Error in matrix values";
+                err.message = "Error in matrix values. You have to give only numeric values.";
                 return false;
             }
             matrix[rows][cols] = num;
@@ -46,7 +46,7 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
     }
 
     if (rows < 3) {
-        err.message = "Given matrix is not full";
+        err.message = "Given matrix is not full. Input file has to contain at least 3 rows";
         return false;
     }
 
@@ -56,7 +56,7 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
 bool ParseArgs(int argc, char* const argv[], Error& err, Files& files)
 {
     if (argc != 3) {
-        err.message = "Wrong parameters given";
+        err.message = "Wrong parameters given. Required parameters: <inputMatrixFilename1> <inputMatrixFilename2>";
         return false;
     }
     files.fileName1 = argv[1];

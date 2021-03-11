@@ -11,7 +11,7 @@ struct Files {
     std::string fileName1, fileName2;
 };
 
-typedef int Matrix3x3[3][3];
+typedef double Matrix3x3[3][3];
 
 bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
 {
@@ -23,7 +23,7 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
     }
 
     std::string str;
-    size_t num;
+    double num;
     int rows = 0;
     int cols = 0;
     while (!file.eof()) {
@@ -31,21 +31,23 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
         std::istringstream iStr(str);
         for (int i = 1; i <= 3; i++) {
             if (iStr.eof()) {
-                err.message = "Lack of values in matrix";
+                err.message = "Given matrix is not full";
                 return false;
             }
-            iStr >> str;
-            try {
-                num = std::stoi(str);
-                matrix[rows][cols] = num;
-            } catch (std::exception) {
+            if (!(iStr >> num)) {
                 err.message = "Error in matrix values";
                 return false;
             }
+            matrix[rows][cols] = num;
             cols++;
         }
         rows++;
         cols = 0;
+    }
+
+    if (rows < 3) {
+        err.message = "Given matrix is not full";
+        return false;
     }
 
     return true;
@@ -66,7 +68,7 @@ void MultMatrix3x3(const Matrix3x3& m1, const Matrix3x3& m2, Matrix3x3& res)
 {
     for (int k = 0; k < 3; k++) {
         for (int i = 0; i < 3; i++) {
-            int sum = 0;
+            double sum = 0;
             for (int j = 0; j < 3; j++) {
                 sum += m1[k][j] * m2[j][i];
             }
@@ -77,6 +79,7 @@ void MultMatrix3x3(const Matrix3x3& m1, const Matrix3x3& m2, Matrix3x3& res)
 
 void WriteOutMatrix3x3(const Matrix3x3& m)
 {
+    std::cout.precision(3);
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             std::cout << m[i][j] << " ";

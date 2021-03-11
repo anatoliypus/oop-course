@@ -19,9 +19,13 @@ REM Wrong parameters
 %Program% goodMatrix1.txt > nul && goto err
 echo Test 3 passed
 
-REM Lack of values
+REM Lack of cols
 %Program% goodMatrix1.txt badMatrix2.txt > nul && goto err
 echo Test 4 passed
+
+REM Lack of rows
+%Program% goodMatrix1.txt badMatrix3.txt > nul && goto err
+echo Test 5 passed
 
 echo All tests passed
 exit /B 0

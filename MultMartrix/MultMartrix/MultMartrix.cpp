@@ -26,7 +26,7 @@ bool ReadMatrix3x3(const std::string& fileName, Matrix3x3& matrix, Error& err)
     double num;
     int rows = 0;
     int cols = 0;
-    while (!file.eof()) {
+    while (!file.eof() && rows < 3) {
         std::getline(file, str);
         std::istringstream iStr(str);
         for (int i = 1; i <= 3; i++) {

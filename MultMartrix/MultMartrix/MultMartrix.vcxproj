@@ -170,6 +170,7 @@
     <Text Include="badMatrix3.txt" />
     <Text Include="goodMatrix1.txt" />
     <Text Include="goodMatrix2.txt" />
+    <Text Include="goodMatrix3.txt" />
     <Text Include="goodResult.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

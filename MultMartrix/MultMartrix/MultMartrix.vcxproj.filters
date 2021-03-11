@@ -31,5 +31,6 @@
     <Text Include="badMatrix1.txt" />
     <Text Include="badMatrix2.txt" />
     <Text Include="badMatrix3.txt" />
+    <Text Include="goodMatrix3.txt" />
   </ItemGroup>
 </Project>

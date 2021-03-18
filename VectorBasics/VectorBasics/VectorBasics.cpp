@@ -16,10 +16,6 @@ bool ReadNumbers(DoubleVector& arr, Error& err)
             }
         }
     }
-    if (arr.size() == 0) {
-        err.message = "No values given. You have to type at least 1 number";
-        return false;
-    }
     return true;
 }
 
@@ -39,6 +35,9 @@ void PrintSortedVector(const DoubleVector& arr)
 DoubleVector GetProcessedVector(const DoubleVector& arr)
 {
     DoubleVector res;
+    if (arr.size() == 0) {
+        return res;
+    }
     res.reserve(arr.size());
     double min = *std::min_element(arr.begin(), arr.end());
     std::transform(arr.begin(), arr.end(), std::back_inserter(res), [&min](double el) {

@@ -21,3 +21,10 @@ TEST_CASE("Testing with only one element")
     DoubleVector result { 4 };
     CHECK(GetProcessedVector(testVect) == result);
 }
+
+TEST_CASE("Testing with an empty vector")
+{
+    DoubleVector testVect;
+    DoubleVector res;
+    CHECK(GetProcessedVector(testVect) == res);
+}

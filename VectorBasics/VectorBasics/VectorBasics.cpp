@@ -39,9 +39,9 @@ void PrintSortedVector(const DoubleVector& arr)
 DoubleVector GetProcessedVector(const DoubleVector& arr)
 {
     DoubleVector res;
-    res.resize(arr.size());
+    res.reserve(arr.size());
     double min = *std::min_element(arr.begin(), arr.end());
-    std::transform(arr.begin(), arr.end(), res.begin(), [&min](double el) {
+    std::transform(arr.begin(), arr.end(), std::back_inserter(res), [&min](double el) {
         return el * min;
     });
     return res;

@@ -1,5 +1,23 @@
 ﻿#include "Dictionary.h"
 
+bool ParseArgs(int argc, char* argv[], std::string& path)
+{
+    if (argc != 2) {
+        return false;
+    }
+    path = argv[1];
+    return true;
+}
+
+void ProcessInputFile(std::string fileName)
+{
+    std::ifstream file(fileName);
+    if (!file.good()) {
+        std::ofstream newFile(fileName);
+        newFile.close();
+    }
+}
+
 bool ReadDictionary(Dictionary& dict, std::string inputFile, Error& err)
 {
     std::ifstream input(inputFile);
@@ -50,7 +68,7 @@ std::string ModifyKey(std::string& key)
     return '[' + StrToLowerCase(key) + ']';
 }
 
-bool ProcessExit(std::string& str, int newTranslationsCounter, Dictionary& dict)
+bool ProcessExit(std::string& str, int newTranslationsCounter, Dictionary& dict, std::string& dictPath)
 {
     if (str == "...") {
         if (newTranslationsCounter) {
@@ -58,7 +76,7 @@ bool ProcessExit(std::string& str, int newTranslationsCounter, Dictionary& dict)
             std::string inputStr;
             std::getline(std::cin, inputStr);
             if (inputStr == "y" || inputStr == "Y") {
-                std::ofstream out(INPUT_FILENAME);
+                std::ofstream out(dictPath);
                 std::for_each(dict.begin(), dict.end(), [&out, dict](std::pair<const std::string, std::string> el) {
                     std::string outStr = el.first + " " + el.second + "\n";
                     out << outStr;
@@ -103,7 +121,7 @@ void ProcessKeyword(Dictionary& dict, std::string& keyword, int& newTranslations
     }
 }
 
-void Conversation(Dictionary& dict)
+void Conversation(Dictionary& dict, std::string& dictPath)
 {
     std::cout << "Добро пожаловать в мини-словарь! Чтобы получить перевод, введите любое слово или фразу. Для выхода введите ..." << std::endl;
     std::string str;
@@ -111,7 +129,7 @@ void Conversation(Dictionary& dict)
 
     while (true) {
         std::getline(std::cin, str);
-        if (ProcessExit(str, newTranslationsCounter, dict)) {
+        if (ProcessExit(str, newTranslationsCounter, dict, dictPath)) {
             break;
         }
         ProcessKeyword(dict, str, newTranslationsCounter);

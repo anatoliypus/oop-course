@@ -9,7 +9,7 @@ bool ParseArgs(int argc, char* argv[], std::string& path)
     return true;
 }
 
-void ProcessInputFile(std::string fileName)
+void ProcessInputFile(const std::string& fileName)
 {
     std::ifstream file(fileName);
     if (!file.good()) {
@@ -18,7 +18,7 @@ void ProcessInputFile(std::string fileName)
     }
 }
 
-bool ReadDictionary(Dictionary& dict, std::string inputFile, Error& err)
+bool ReadDictionary(Dictionary& dict, const std::string& inputFile, Error& err)
 {
     std::ifstream input(inputFile);
     if (!input.is_open()) {
@@ -63,12 +63,12 @@ std::string StrToLowerCase(std::string str)
     return str;
 }
 
-std::string ModifyKey(std::string& key)
+std::string ModifyKey(const std::string& key)
 {
     return '[' + StrToLowerCase(key) + ']';
 }
 
-bool ProcessExit(std::string& str, int newTranslationsCounter, Dictionary& dict, std::string& dictPath)
+bool ProcessExit(const std::string& str, int newTranslationsCounter, Dictionary& dict, const std::string& dictPath)
 {
     if (str == "...") {
         if (newTranslationsCounter) {
@@ -96,7 +96,7 @@ bool ProcessExit(std::string& str, int newTranslationsCounter, Dictionary& dict,
     }
 }
 
-void GetNewTranslation(Dictionary& dict, std::string& keyword, int& newTranslationsCounter)
+void GetNewTranslation(Dictionary& dict, const std::string& keyword, int& newTranslationsCounter)
 {
     std::cout << "Неизвестное слово\" " << keyword << "\". Введите перевод или пустую строку для отказа." << std::endl;
     std::string inputStr;
@@ -110,7 +110,7 @@ void GetNewTranslation(Dictionary& dict, std::string& keyword, int& newTranslati
     }
 }
 
-void ProcessKeyword(Dictionary& dict, std::string& keyword, int& newTranslationsCounter)
+void ProcessKeyword(Dictionary& dict, const std::string& keyword, int& newTranslationsCounter)
 {
     try {
         std::string value;
@@ -121,7 +121,7 @@ void ProcessKeyword(Dictionary& dict, std::string& keyword, int& newTranslations
     }
 }
 
-void Conversation(Dictionary& dict, std::string& dictPath)
+void Conversation(Dictionary& dict, const std::string& dictPath)
 {
     std::cout << "Добро пожаловать в мини-словарь! Чтобы получить перевод, введите любое слово или фразу. Для выхода введите ..." << std::endl;
     std::string str;

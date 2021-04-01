@@ -16,13 +16,13 @@ struct Error {
     std::string message;
 };
 
-bool ReadDictionary(Dictionary& dict, std::string inputFile, Error& err);
+bool ReadDictionary(Dictionary& dict, const std::string& inputFile, Error& err);
 bool ParseArgs(int argc, char* argv[], std::string& path);
 std::string StrToLowerCase(std::string str);
-std::string ModifyKey(std::string& key);
-bool ProcessExit(std::string& str, int newTranslationsCounter, Dictionary& dict, std::string& dictPath);
-void GetNewTranslation(Dictionary& dict, std::string& keyword, int& newTranslationsCounter);
-void ProcessKeyword(Dictionary& dict, std::string& keyword, int& newTranslationsCounter);
-void Conversation(Dictionary& dict, std::string& dictPath);
+std::string ModifyKey(const std::string& key);
+bool ProcessExit(const std::string& str, int newTranslationsCounter, Dictionary& dict, const std::string& dictPath);
+void GetNewTranslation(Dictionary& dict, const std::string& keyword, int& newTranslationsCounter);
+void ProcessKeyword(Dictionary& dict, const std::string& keyword, int& newTranslationsCounter);
+void Conversation(Dictionary& dict, const std::string& dictPath);
 void DelayBeforeClose();
-void ProcessInputFile(std::string fileName);
+void ProcessInputFile(const std::string& fileName);

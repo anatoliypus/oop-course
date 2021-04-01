@@ -10,8 +10,9 @@ std::string ReadStrFromCin()
     return result;
 }
 
-bool HTMLDecode(std::string& str, std::string& result, Error& err)
+std::string HTMLDecode(const std::string& str)
 {
+    std::string result;
     std::unordered_map<std::string, char> SymbolPairs = {
         { "&quot", '"' },
         { "&apos", '`' },
@@ -24,7 +25,7 @@ bool HTMLDecode(std::string& str, std::string& result, Error& err)
 
     result = "";
 
-    for (char& ch : str) {
+    for (const char& ch : str) {
         if (ch == '&') {
             mode = Modes::detectSymbol;
         } else if (ch == ';' && mode == Modes::detectSymbol) {
@@ -38,21 +39,18 @@ bool HTMLDecode(std::string& str, std::string& result, Error& err)
             symbol.push_back(ch);
         }
         if (mode == Modes::push) {
-            char symbolToInsert;
-            try {
-                symbolToInsert = SymbolPairs.at(symbol);
-            } catch (std::exception&) {
-                err.message = "Unknown special character given: " + symbol;
-                return false;
+            auto symbolToInsertIterator = SymbolPairs.find(symbol);
+            if (symbolToInsertIterator == SymbolPairs.end()) {
+                result += symbol + ';';
+            } else {
+                result.push_back(std::get<1>(*symbolToInsertIterator));
             }
-            symbol = "";
-            result.push_back(symbolToInsert);
             mode = Modes::read;
+            symbol = "";
         }
     }
     if (mode != Modes::read) {
-        err.message = "Wrong HTML syntax given";
-        return false;
+        result += symbol;
     }
-    return true;
+    return result;
 }

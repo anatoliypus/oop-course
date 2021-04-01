@@ -13,5 +13,5 @@ enum class Modes {
     push
 };
 
-bool HTMLDecode(std::string& str, std::string& result, Error& err);
+std::string HTMLDecode(const std::string& str);
 std::string ReadStrFromCin();

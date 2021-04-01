@@ -1,34 +1,25 @@
 #include "../../catch2/catch.hpp"
 #include "../HTMLDecode/HTMLDecode.h"
 
-TEST_CASE("Testing decode method with good tests")
+TEST_CASE("Testing decode method")
 {
     std::string str = "Cat &lt;says&gt; &quot;Meow&quot;. M&amp;M&apos;s";
     std::string expected = "Cat <says> \"Meow\". M&M`s";
-    std::string result;
-    Error err;
-    HTMLDecode(str, result, err);
-    REQUIRE(result == expected);
+    REQUIRE(HTMLDecode(str) == expected);
 
     str = "";
     expected = "";
-    HTMLDecode(str, result, err);
-    REQUIRE(result == expected);
+    REQUIRE(HTMLDecode(str) == expected);
 
     str = "Hi;";
     expected = "Hi;";
-    HTMLDecode(str, result, err);
-    REQUIRE(result == expected);
-}
+    REQUIRE(HTMLDecode(str) == expected);
 
-TEST_CASE("Testing decode method with bad tests")
-{
-    std::string str = "Cat &lt;says&gt; &quot;Meow&quot. M&amp;M&apos;s";
-    std::string result;
-    Error err;
-    REQUIRE(!HTMLDecode(str, result, err));
+    str = "&quott;Hello world&quot;";
+    expected = "&quott;Hello world\"";
+    REQUIRE(HTMLDecode(str) == expected);
 
-    str = "&quot Hi";
-    HTMLDecode(str, result, err);
-    REQUIRE(!HTMLDecode(str, result, err));
+    str = "&quot";
+    expected = "&quot";
+    REQUIRE(HTMLDecode(str) == expected);
 }

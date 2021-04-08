@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
         std::cout << err.message << std::endl;
         return 1;
     }
-    MainSet set;
+    IntegerSet set;
     set = GeneratePrimeNumbersSet(upperborder);
     PrintOutSet(set);
     return 0;

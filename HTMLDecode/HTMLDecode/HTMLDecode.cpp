@@ -28,6 +28,10 @@ std::string HTMLDecode(const std::string& str)
     for (const char& ch : str) {
         if (ch == '&') {
             mode = Modes::detectSymbol;
+            if (!symbol.empty()) {
+                symbol = "";
+                result.push_back('&');
+            }
         } else if (ch == ';' && mode == Modes::detectSymbol) {
             mode = Modes::push;
         }

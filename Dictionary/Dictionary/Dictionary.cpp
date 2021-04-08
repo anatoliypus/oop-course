@@ -33,9 +33,12 @@ bool ReadDictionary(Dictionary& dict, const std::string& inputFile, Error& err)
             continue;
         }
         std::istringstream iStr(str);
-        if (!(iStr >> key)) {
-            err.message = "Wrong dictionary file syntax";
-            return false;
+        char ch;
+        while (ch = iStr.get()) {
+            key.push_back(ch);
+            if (ch == ']') {
+                break;
+            }
         }
         std::string newWord;
         while (iStr >> newWord) {
@@ -50,6 +53,7 @@ bool ReadDictionary(Dictionary& dict, const std::string& inputFile, Error& err)
         }
         dict.insert({ key, value });
         value = "";
+        key = "";
     }
     input.close();
     return true;
@@ -102,6 +106,7 @@ void GetNewTranslation(Dictionary& dict, const std::string& keyword, int& newTra
     std::string inputStr;
     std::getline(std::cin, inputStr);
     if (!inputStr.empty()) {
+        std::cout << ModifyKey(keyword) << std::endl;
         dict.insert({ ModifyKey(keyword), inputStr });
         newTranslationsCounter++;
         std::cout << "Слово \"" << keyword << "\" сохранено в словаре как \"" << inputStr << "\".\n";
@@ -114,6 +119,7 @@ void ProcessKeyword(Dictionary& dict, const std::string& keyword, int& newTransl
 {
     try {
         std::string value;
+        std::cout << ModifyKey(keyword) << std::endl;
         value = dict.at(ModifyKey(keyword));
         std::cout << value << std::endl;
     } catch (std::exception&) {

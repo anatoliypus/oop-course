@@ -19,14 +19,14 @@ bool IsPrime(NumType num)
     return true;
 }
 
-MainSet GeneratePrimeNumbersSet(NumType upperBound)
+IntegerSet GeneratePrimeNumbersSet(NumType upperBound)
 {
     std::vector<bool> nums(upperBound + 1, true);
     nums[0] = nums[1] = false;
-    MainSet set;
+    IntegerSet set;
     long long sqrtUpperBound = static_cast<NumType>(std::ceil(std::sqrt(upperBound)));
     for (NumType i = 2; i <= sqrtUpperBound; i++) {
-        if (IsPrime(i)) {
+        if (nums[i] && IsPrime(i)) {
             for (NumType j = 2 * i; j <= upperBound; j += i) {
                 nums[j] = false;
             }
@@ -68,7 +68,7 @@ bool ParseArgs(int argc, char* argv[], NumType& upperBorder, Error& err)
     return true;
 }
 
-void PrintOutSet(MainSet& set)
+void PrintOutSet(IntegerSet& set)
 {
     std::for_each(set.begin(), set.end(), [](NumType el) {
         std::cout << el << " ";

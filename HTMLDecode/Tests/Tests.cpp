@@ -22,4 +22,16 @@ TEST_CASE("Testing decode method")
     str = "&quot";
     expected = "&quot";
     REQUIRE(HTMLDecode(str) == expected);
+
+    str = "&&quot;";
+    expected = "&\"";
+    REQUIRE(HTMLDecode(str) == expected);
+
+    str = "&&&";
+    expected = "&&&";
+    REQUIRE(HTMLDecode(str) == expected);
+
+    str = "&&&quot;&&&";
+    expected = "&&\"&&&";
+    REQUIRE(HTMLDecode(str) == expected);
 }

@@ -13,7 +13,13 @@ TEST_CASE("Testing checking is prime function")
 
 TEST_CASE("Testing set generating function")
 {
-    REQUIRE(GeneratePrimeNumbersSet(2).size() == 1);
-    REQUIRE(GeneratePrimeNumbersSet(10).size() == 4);
+    IntegerSet result1 { 2 };
+    REQUIRE(GeneratePrimeNumbersSet(2) == result1);
+
+    IntegerSet result2 { 2, 3, 5, 7 };
+    REQUIRE(GeneratePrimeNumbersSet(10) == result2);
+
+#ifdef NDEBUG
     REQUIRE(GeneratePrimeNumbersSet(100000000).size() == 5761455);
+#endif
 }

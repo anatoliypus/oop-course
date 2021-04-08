@@ -8,9 +8,10 @@
 #include <string>
 #include <vector>
 
-#define MAX_VALUE 100000000
+const long MAX_VALUE = 100000000;
 
-typedef std::set<int> MainSet;
+typedef std::set<int>
+    IntegerSet;
 typedef unsigned long NumType;
 
 struct Error {
@@ -18,6 +19,6 @@ struct Error {
 };
 
 bool IsPrime(NumType num);
-MainSet GeneratePrimeNumbersSet(NumType upperBound);
+IntegerSet GeneratePrimeNumbersSet(NumType upperBound);
 bool ParseArgs(int argc, char* argv[], NumType& upperBorder, Error& err);
-void PrintOutSet(MainSet& set);
+void PrintOutSet(IntegerSet& set);

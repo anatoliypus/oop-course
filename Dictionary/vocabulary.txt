@@ -1,7 +1,11 @@
+[my friend] мой друг
 [red] красный
 [milk] молоко
-[cat] кот, кошка
 [apple] яблоко
+[cat] кот, кошка
 [class] урок, класс
 [yellow] желтый
 [purple] фиолетовый
+[an apple] яблоко
+[hello world] привет мир
+[my dear friend] мой дорогой друг

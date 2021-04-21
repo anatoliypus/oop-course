@@ -26,7 +26,7 @@ IntegerSet GeneratePrimeNumbersSet(NumType upperBound)
     IntegerSet set;
     long long sqrtUpperBound = static_cast<NumType>(std::ceil(std::sqrt(upperBound)));
     for (NumType i = 2; i <= sqrtUpperBound; i++) {
-        if (nums[i] && IsPrime(i)) {
+        if (nums[i]) {
             for (NumType j = 2 * i; j <= upperBound; j += i) {
                 nums[j] = false;
             }

@@ -51,9 +51,9 @@ bool ReadDictionary(Dictionary& dict, const std::string& inputFile, Error& err)
             err.message = "Wrong dictionary file syntax";
             return false;
         }
-        dict.insert({ key, value });
-        value = "";
-        key = "";
+        dict.emplace(key, value);
+        value.clear();
+        key.clear();
     }
     input.close();
     return true;
@@ -106,7 +106,6 @@ void GetNewTranslation(Dictionary& dict, const std::string& keyword, int& newTra
     std::string inputStr;
     std::getline(std::cin, inputStr);
     if (!inputStr.empty()) {
-        std::cout << ModifyKey(keyword) << std::endl;
         dict.insert({ ModifyKey(keyword), inputStr });
         newTranslationsCounter++;
         std::cout << "Слово \"" << keyword << "\" сохранено в словаре как \"" << inputStr << "\".\n";

@@ -14,6 +14,15 @@ TEST_CASE("Testing speed and gear setters")
 {
 	Car car;
 
+	car.SetGear(0);
+	CHECK(car.GetGear() == 0);
+
+	car.SetGear(1);
+	CHECK(car.GetGear() == 0);
+
+	car.SetSpeed(0);
+	CHECK(car.GetSpeed() == 0);
+
 	car.SetSpeed(10);
 	CHECK(car.GetSpeed() == 0);
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 
+namespace CarSpecs
+{
 const int GearRMax = 20;
 const int GearRMin = 0;
 
@@ -25,6 +27,7 @@ const int Gear5Min = 50;
 const std::string standing = "Standing";
 const std::string forwards = "Forwards";
 const std::string backwards = "Backwards";
+} // namespace CarSpecs
 
 struct GearLimit
 {

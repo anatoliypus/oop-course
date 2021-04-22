@@ -1,13 +1,16 @@
 ﻿#include "Car.h"
 
-std::unordered_map<int, GearLimit> gearLimits = {
-	{ -1, GearLimit(GearRMax, GearRMin) },
-	{ 1, GearLimit(Gear1Max, Gear1Min) },
-	{ 2, GearLimit(Gear2Max, Gear2Min) },
-	{ 3, GearLimit(Gear3Max, Gear3Min) },
-	{ 4, GearLimit(Gear4Max, Gear4Min) },
-	{ 5, GearLimit(Gear5Max, Gear5Min) },
+namespace
+{
+const std::unordered_map<int, GearLimit> gearLimits = {
+	{ -1, GearLimit(CarSpecs::GearRMax, CarSpecs::GearRMin) },
+	{ 1, GearLimit(CarSpecs::Gear1Max, CarSpecs::Gear1Min) },
+	{ 2, GearLimit(CarSpecs::Gear2Max, CarSpecs::Gear2Min) },
+	{ 3, GearLimit(CarSpecs::Gear3Max, CarSpecs::Gear3Min) },
+	{ 4, GearLimit(CarSpecs::Gear4Max, CarSpecs::Gear4Min) },
+	{ 5, GearLimit(CarSpecs::Gear5Max, CarSpecs::Gear5Min) },
 };
+}
 
 Car::Car()
 {
@@ -35,15 +38,15 @@ std::string Car::GetDirection() const
 {
 	if (m_speed > 0)
 	{
-		return forwards;
+		return CarSpecs::forwards;
 	}
 	else if (m_speed == 0)
 	{
-		return standing;
+		return CarSpecs::standing;
 	}
 	else
 	{
-		return backwards;
+		return CarSpecs::backwards;
 	}
 }
 
@@ -119,18 +122,30 @@ bool Car::SetSpeed(int speed)
 		{
 			return false;
 		}
-	}
-	else if (std::abs(m_speed) < speed)
-	{
-		return false;
-	}
-	if (m_gear == -1)
-	{
-		m_speed = speed * -1;
+		if (m_gear == -1)
+		{
+			m_speed = speed * -1;
+		}
+		else
+		{
+			m_speed = speed;
+		}
 	}
 	else
 	{
-		m_speed = speed;
+		if (std::abs(m_speed) < speed)
+		{
+			return false;
+		}
+		if (m_speed < 0)
+		{
+			m_speed = speed * -1;
+		}
+		else
+		{
+			m_speed = speed;
+		}
 	}
+
 	return true;
 }
